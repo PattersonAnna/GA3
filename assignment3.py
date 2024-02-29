@@ -1,22 +1,13 @@
 import math
-#from collections import namedtuple
-#Point = namedtuple('Point', ['x', 'y'])
-
 
 def minimun_cost_connecting_edges(input_file_path, output_file_path):
-    with open(input_file_path, 'r') as infile:
+    with open(input_file_path, 'r') as infile:                                          
         rows = [l.replace('(', '').replace(')', '').split(',') for l in infile.readlines()]
         vertices = [(int(x), int(y)) for x, y in zip(*[iter(rows[0])] * 2)]
         edges = [(int(x), int(y)) for x, y in zip(*[iter(rows[1])] * 2)]
-        print(vertices)
-        print(edges)
-        x = create_adjacency_matrix(vertices, edges)
-        for row in x:
-            print(row)
-       
-        #vertices = [Point(int(x), int(y)) for x, y in zip(*[iter(rows[0])] * 2)] 
-        #edges = [Point(int(x), int(y)) for x, y in zip(*[iter(rows[1])] * 2)] 
-
+        graph = create_adjacency_matrix(vertices, edges)
+        minimun_cost = minimun_graph_weight(graph)
+    
 
 def manhatan_distance(vertice_start, vertice_end):
     x_value_start, y_value_start = vertice_start
@@ -35,14 +26,17 @@ def create_adjacency_matrix(vertices, edges):
         adjacency_matrix[edge_start-1][edge_end-1] = 0
         adjacency_matrix[edge_end-1][edge_start-1] = 0
 
-
-
     return adjacency_matrix
 
+def minimun_graph_weight(graph):
+    num_vertices = len(graph)
+    distances = [float('inf')] * num_vertices
+    visited = [False] * num_vertices
+    distances[0] = 0
 
+    
 def main():
     minimun_cost_connecting_edges("Sample_Input.txt", "Sample_Output.txt")
-
 
 if __name__ == "__main__":
     main()
