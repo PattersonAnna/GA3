@@ -8,7 +8,8 @@ def minimun_cost_connecting_edges(input_file_path, output_file_path):
         rows = [l.replace('(', '').replace(')', '').split(',') for l in infile.readlines()]
         vertices = [(int(x), int(y)) for x, y in zip(*[iter(rows[0])] * 2)]
         edges = [(int(x), int(y)) for x, y in zip(*[iter(rows[1])] * 2)]
-    
+        print(vertices)
+        print(edges)
         x = create_adjacency_matrix(vertices, edges)
         for row in x:
             print(row)
@@ -29,6 +30,12 @@ def create_adjacency_matrix(vertices, edges):
     for i in range(num_vertices):
         for j in range(num_vertices):
             adjacency_matrix[i][j] = manhatan_distance(vertices[i], vertices[j])
+    for edge in edges:
+        edge_start, edge_end = edge
+        adjacency_matrix[edge_start-1][edge_end-1] = 0
+        adjacency_matrix[edge_end-1][edge_start-1] = 0
+
+
 
     return adjacency_matrix
 
