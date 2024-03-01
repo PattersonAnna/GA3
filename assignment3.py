@@ -7,6 +7,9 @@ def minimun_cost_connecting_edges(input_file_path, output_file_path):
         edges = [(float(x), float(y)) for x, y in zip(*[iter(rows[1])] * 2)]
         graph = create_adjacency_matrix(vertices, edges)
         minimun_cost = minimun_graph_weight(graph)
+        total_weight = correct_weight(minimun_cost)
+    with open(output_file_path, 'w') as outfile:
+        outfile.write(f'{int(total_weight)}\n')
     
 
 def manhatan_distance(vertice_start, vertice_end):
@@ -32,35 +35,36 @@ def min_edge_weight(graph, weight_of_path, visited):
     num_vertices = len(graph)
     current_min = 10000000000000
     for i in range(num_vertices):
-        print("weight of path: ", weight_of_path[i], " current min: ", current_min, " visited: ", visited[i])
         if weight_of_path[i] < current_min and visited[i] == False:
             current_min = weight_of_path[i]                                      #check if next edges weight is less then the current 
-            visited[i] = True                                                    #If it is it as the new min weight path and set it so it has been visited (don't want to repeat visiting vertices)
             current_vertices = i
     return current_vertices
 
 def minimun_graph_weight(graph):
     num_vertices = len(graph)
     weight_of_path = [1000000000000] * num_vertices                              #used to store the the different weigth options
-    current_path = [10000000000] * num_vertices                                #stores the current path with the shortest weight
     visited = [False] * num_vertices                                            #stores if a vertices has already been visited/ added to current path
     weight_of_path[0] = 0                                                       #intalizing with zero because the 0 -> 0 will have zero weight
-    current_path = -1                                                           #first vertice in the tree us the start node -1
-
 
     for i in range(num_vertices):
-        min_path = min_edge_weight(graph, weight_of_path, visited)
+        min_weight = min_edge_weight(graph, weight_of_path, visited)
         visited[i] = True 
-        print("min path: ", type(min_path), min_path)
-        print("current path type: ", type(current_path), current_path)
         for j in range(num_vertices):
-            if int(graph[i][j]) < min_path and visited[j] == False:
+            if graph[i][j] > 0 and visited[j] == False and weight_of_path[j] > int(graph[i][j]):
                 weight_of_path[j] = graph[i][j]
-                current_path[j] = min_path
 
+    return weight_of_path
 
-    return num_vertices
+def correct_weight(minimun_cost):
+    total = len(minimun_cost)
+    sum = 0
+    for i in range(total):
+        if minimun_cost[i] == 0.1:
+            minimun_cost[i] = 0
+    for i in range(total):
+        sum += minimun_cost[i]
 
+    return sum
 
     
 def main():
