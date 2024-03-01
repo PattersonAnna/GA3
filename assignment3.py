@@ -33,16 +33,6 @@ def create_adjacency_matrix(vertices, edges):
         adjacency_matrix[int(edge_end-1)][int(edge_start-1)] = 0.1
     return adjacency_matrix
 
-#finds the index that has not yet been set to have the smallest weight
-def min_edge_weight(graph, weight_of_path, visited):
-    num_vertices = len(graph)
-    current_min = 10000000000000
-    for i in range(num_vertices):
-        if weight_of_path[i] < current_min and visited[i] == False:
-            current_min = weight_of_path[i]                                      #check if next edges weight is less then the current 
-            current_vertices = i
-    return current_vertices
-
 #Creates a list that holds the values of the edges with the least amout of weight that creates a complete graph
 # uses for loops and a helper function to move through the adjacency matrix findng the path with the least amount of weight
 def minimun_graph_weight(graph):
@@ -52,7 +42,6 @@ def minimun_graph_weight(graph):
     weight_of_path[0] = 0                                                       #intalizing with zero because the 0 -> 0 will have zero weight
 
     for i in range(num_vertices):
-        min_weight = min_edge_weight(graph, weight_of_path, visited)
         visited[i] = True 
         for j in range(num_vertices):
             if graph[i][j] > 0 and visited[j] == False and weight_of_path[j] > int(graph[i][j]):
