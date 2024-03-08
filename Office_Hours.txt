@@ -1,0 +1,24 @@
+- Shouldn't think of it as a graph-directed or non-directed 
+- We don't even really need to understand the SAT code because we will not be changing it 
+- Our goal is to create a function or multiple functions that represent all of the different toggle states for the light circuit
+- the a and the b represent the X1 and the X2 in the ((x1 ∨ x2) ∧ (x1 ∨ ¬x2) ∧ (¬x1 ∨ x2) ∧ (¬x1 ∨ ¬x2)
+- So for this (x1 ∨ x2) ∧ (x1 ∨ ¬x2) ∧ (¬x1 ∨ x2) ∧ (¬x1 ∨ ¬x2), it is a clause that represents 4 different lights and the current toggle state of the switches 
+- So we don't really care if the lights are on or off we want to know if it's possible to create a clause based on the different toggle switch combination that results in just true
+Example:
+Light 1       Light 2      Light 3      Light 4
+(x1 ∨ x2) ∧ (x1 ∨ ¬x2) ∧ (¬x1 ∨ x2) ∧ (¬x1 ∨ ¬x2)
+Light 1: x1 = switch 1 (true), switch 2 (true)
+Light 2: x1 = switch 1 (false), switch 2 (true)
+Light 3: x1 = switch 1 (true), switch 2 (false)
+Light 4: x1 = switch 1 (true), switch 2 (true)
+(x1(true) ∨ x2 (true)) ∧ (x1(false) ∨ ¬x2(false)) ∧ (¬x1(false) ∨ x2(false)) ∧ (¬x1(false) ∨ ¬x2(false))
+        true         ∧        false               ∧          false           ∧         false = false
+- My understanding is that each light will have 4 different states/clauses and 16 different conjunctions 
+State 1: x1 = true x2 = true - (x1 ∨ x2) ∧ (x1 ∨ ¬x2) ∧ (¬x1 ∨ x2) ∧ (¬x1 ∨ ¬x2)
+State 2: x1 = true x2 = false - (x1 ∨ x2) ∧ (x1 ∨ ¬x2) ∧ (¬x1 ∨ x2) ∧ (¬x1 ∨ ¬x2)
+State 3: x1 = false x2 = true - (x1 ∨ x2) ∧ (x1 ∨ ¬x2) ∧ (¬x1 ∨ x2) ∧ (¬x1 ∨ ¬x2)
+State 4: x1 = flase x2 = flase - (x1 ∨ x2) ∧ (x1 ∨ ¬x2) ∧ (¬x1 ∨ x2) ∧ (¬x1 ∨ ¬x2)
+- If you then have the 4 lights in total each with 16 different conjunctions then we would have 16 X 16 X 16 X 16 different clauses 
+and have a function that makes these different combination and then calls the SAT function we are given and if the SAT function ever returns true then we know all the lights can be turned off
+- So it could be a for loops that creates the clause and calls the function and it woudl repeat 16^n where n is the number of lights and an if statment to check if the SAT function return true,
+if true then exit the for loop and print yes, if it never returns true then print no
