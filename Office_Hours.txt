@@ -57,12 +57,12 @@ Ex:
 -2,3 (light3 connected to switches b and c)
 
 - L1 = (1, 1, a, c), L2 = (2, 0, a, b), L3 = (3, 1, b, c)  (this would need to be your input for function 2)
-- L1 = (a ∨ ¬c) ∧ (¬a ∨ c)
+- L1 = (a ∨ ¬c) v (¬a ∨ c)
 - L2 = (¬a ∨ ¬b)
-- L3 = (b ∨ ¬c) ∧ (¬b ∨ c)
+- L3 = (b ∨ ¬c) v (¬b ∨ c)
 - These would be the different clauses and they would need to be added as clauses and then call the find contradiction function
 - I'm not totally sure about all of this, this is just my understanding right now
-- I think you would then have (a ∨ ¬c) ∧ (¬a ∨ c) ∧ (¬a ∨ ¬b) ∧ (b ∨ ¬c) ∧ (¬b ∨ c)
+- I think you would then have (a ∨ ¬c) v (¬a ∨ c) ∧ (¬a ∨ ¬b) v (b ∨ ¬c) ∧ (¬b ∨ c)
 - would maybe just need for loops and if statements, for loop to loop through all the lights, and if statements to see if the light is on or off
 
 Function2 (list of lights):
@@ -75,7 +75,7 @@ Function2 (list of lights):
         contridiction_function(clauses)
 Switch 1 = a or b or c
 Switch 2 = a or b or c
-clauses = (a ∨ ¬c) ∧ (¬a ∨ c) ∧ (¬a ∨ ¬b) ∧ (b ∨ ¬c) ∧ (¬b ∨ c)
+clauses = (a ∨ ¬c) v (¬a ∨ c) ∧ (¬a ∨ ¬b) ∧ (b ∨ ¬c) v (¬b ∨ c)
 
 
 
