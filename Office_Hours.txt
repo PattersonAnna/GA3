@@ -31,11 +31,11 @@ Ex:
 If a light is off we want to keep it that way so it needs to be (¬x1 ∨ ¬x2) because that means nothing is toggled so the state of the light is not changing
 If a light is on we want to change that so it needs to be (x1 ∨ ¬x2) ∧ (¬x1 ∨ x2) because that means we are toggling one switch and not the other, both of these actions will result in the light being turned off
 
-- I think it's more helpful to think of the ¬ as meaning not toggles or do nothing 
+- I think it's more helpful to think of the ¬ as meaning not toggles or to do nothing 
 - So something without ¬ means that an action has been taken on that switch
 - (x1 ∨ ¬x2) (switch 1 was toggle and state has changed or switch 2 was left exactly how it was)
 
-Conclusion: We will need to create functions that will create a clause that represents each light and what state it needs to be in to be turned off
+Conclusion: We will need to create functions that will create a clause that represents each light and what state it needs to be in to be turned off, 
 an off light needs to stay the same and an on light needs to have an action done to it.
 
 Ex: (Maybe the functions we would need)
@@ -46,7 +46,36 @@ Function 1: Read the inputs from the text file and create two different instance
 - This first function would be a good place to start (reading the information and placing it in a structure that will be easy to use and work well)
 
 Function 2: Will assign the clauses that relate to the different lights based on whether the light is on the on or off position
-- Will then call the functions 
+- Will then add the clauses and call the corresponding function to see if there are any contradictions.
+
+Ex:
+- Each switch could be represent by a letter 1 = a, 2 = b, 3 = c.
+-3,3
+- 1,0,1
+-1,3 (light1 connected to switches a and c)
+-1,2 (light2 connected to switches a and b)
+-2,3 (light3 connected to switches b and c)
+
+- L1 = (1, 1, a, c), L2 = (2, 0, a, b), L3 = (3, 1, b, c)  (this would need to be your input for function 2)
+- L1 = (a ∨ ¬c) ∧ (¬a ∨ c)
+- L2 = (¬a ∨ ¬b)
+- L3 = (b ∨ ¬c) ∧ (¬b ∨ c)
+- These would be the different clauses and they would need to be added as clauses and then call the find contradiction function
+- I'm not totally sure about all of this, this is just my understanding right now
+- I think you would then have (a ∨ ¬c) ∧ (¬a ∨ c) ∧ (¬a ∨ ¬b) ∧ (b ∨ ¬c) ∧ (¬b ∨ c)
+- would maybe just need for loops and if statements, for loop to loop through all the lights, and if statements to see if the light is on or off
+
+Function2 (list of lights):
+        for(lights in range(list):
+                if light == 1:
+                        add.clause(swtict1, ¬switch2)
+                        add.clause(¬swtict1, switch2)
+                else:
+                        add.clause(¬swtict1, ¬swtict2)
+        contridiction_function(clauses)
+Switch 1 = a or b or c
+Switch 2 = a or b or c
+clauses = (a ∨ ¬c) ∧ (¬a ∨ c) ∧ (¬a ∨ ¬b) ∧ (b ∨ ¬c) ∧ (¬b ∨ c)
 
 
 
