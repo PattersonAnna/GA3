@@ -22,3 +22,42 @@ State 4: x1 = flase x2 = flase - (x1 ∨ x2) ∧ (x1 ∨ ¬x2) ∧ (¬x1 ∨ x2)
 and have a function that makes these different combination and then calls the SAT function we are given and if the SAT function ever returns true then we know all the lights can be turned off
 - So it could be a for loops that creates the clause and calls the function and it woudl repeat 16^n where n is the number of lights and an if statment to check if the SAT function return true,
 if true then exit the for loop and print yes, if it never returns true then print no
+
+Profs Response:
+-The state of the lights does matter
+- And we don't want to input every option because every option isn't possible
+
+Ex:
+If a light is off we want to keep it that way so it needs to be (¬x1 ∨ ¬x2) because that means nothing is toggled so the state of the light is not changing
+If a light is on we want to change that so it needs to be (x1 ∨ ¬x2) ∧ (¬x1 ∨ x2) because that means we are toggling one switch and not the other, both of these actions will result in the light being turned off
+
+- I think it's more helpful to think of the ¬ as meaning not toggles or do nothing 
+- So something without ¬ means that an action has been taken on that switch
+- (x1 ∨ ¬x2) (switch 1 was toggle and state has changed or switch 2 was left exactly how it was)
+
+Conclusion: We will need to create functions that will create a clause that represents each light and what state it needs to be in to be turned off
+an off light needs to stay the same and an on light needs to have an action done to it.
+
+Ex: (Maybe the functions we would need)
+
+Function 1: Read the inputs from the text file and create two different instances
+- Call function 2 input will be (light if it's on or off, and the switches it is connected to) - this could be a list where each element has light#, 0 or 1 (for on or off), and an array of the two switches
+- Not sure this is the best way to store the information
+- This first function would be a good place to start (reading the information and placing it in a structure that will be easy to use and work well)
+
+Function 2: Will assign the clauses that relate to the different lights based on whether the light is on the on or off position
+- Will then call the functions 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
