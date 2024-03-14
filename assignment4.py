@@ -233,5 +233,60 @@ def main():
     create_clauses(light_map)
     can_turn_off_lights("Sample_Input.txt", "Sample_Output.txt")
 
+
+'''
+try:
+    with open("input_file_path", 'r') as infile:
+        lines = [l.replace('***\n', 'problem').replace('\n', '').split(',') for l in infile.readlines()]
+        print(lines)
+
+        # holds problem 1 info 
+        problem1 = []
+        problem1Lights = []
+        problem1Connections = []
+
+        #holds problem 2 info
+        problem2 = []
+        problem2lights = []
+        problem2connections = []
+        length = len(lines)
+
+        #iterates through list, problem 1
+        j = 0 
+        x = 0
+        x += 1
+        j += 1
+        problem1.append(lines[x])
+        x += 1
+        j += 1
+        problem1Lights.append(lines[x])
+        x += 1
+        j += 1
+        while lines[x][0] != 'problem':
+            problem1Connections.append(lines[x])
+            x += 1
+            j += 1
+
+        #iterates through list, problem 2
+        j += 1
+        problem2.append(lines[j])
+        j += 1
+        problem2lights.append(lines[j])
+        j +=  1
+        while j != length:
+            problem2connections.append(lines[j])
+            j += 1
+        # delete later, print statements
+        print(problem1)
+        print(problem1Lights)
+        print(problem1Connections)
+        print(problem2)
+        print(problem2lights)
+        print(problem2connections)
+        # need to add the write for output
+except Exception as exception:
+        print(exception)      
+'''
+
 if __name__ == "__main__":
     main()
