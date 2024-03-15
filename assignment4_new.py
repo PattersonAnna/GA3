@@ -91,7 +91,6 @@ def explore(dir_graph, visited, node, stack, scc):
     if node not in visited:
         visited.append(node)
         for neighbour in dir_graph.graph[node]:
-            print("neighbor: ", neighbour)
             explore(dir_graph, visited, neighbour, stack, scc)
         stack.append(node)
         scc.append(node)
@@ -143,8 +142,6 @@ def find_contradiction(sccs):
 
 # Function that determines if a given 2-CNF is Satisfiable or not
 def two_sat_solver(two_cnf_formula):
-    print("Checking if the following 2-CNF is Satisfiable in linear time ")
-    two_cnf_formula.print()
     # setup the edges of the graph
     # G = (V,E) , V = L U ~L where L = set of variables in 2-CNF
     # E =
@@ -154,16 +151,14 @@ def two_sat_solver(two_cnf_formula):
         if len(clause) == 2:
             u = clause[0]
             v = clause[1]
-            print("U: ", u, " V: ", v)
             graph.addEdge(double_neg(neg+u), v)
             graph.addEdge(double_neg(neg+v), u)
-            print(graph.print())
         else:
             graph.addEdge(double_neg(neg+clause[0]), clause[0])
     if not find_contradiction(strongly_connected_components(graph)):
-        return True
+        return "yes"
     else:
-        return False
+        return "no"
 
 
 #Our code
@@ -171,7 +166,6 @@ def can_turn_off_lights(input_file_path, output_file_path):
     try:
         with open(input_file_path, 'r') as infile:
             lines = [l.replace('***\n', 'problem').replace('\n', '').split(',') for l in infile.readlines()]
-            #print(lines)
 
             # holds problem 1 info 
             problem1 = []
@@ -209,24 +203,22 @@ def can_turn_off_lights(input_file_path, output_file_path):
             while j != length:
                 problem2connections.append(lines[j])
                 j += 1
-        if int(problem1[0][0]) < 1:
+
+        if int(problem1[0][0]) <= 1:
              with open(output_file_path, 'w') as outfile:
                  outfile.write(f'{"no"}\n')
-
-        answer1 = format_input(problem1, problem1Lights, problem1Connections) 
-        answer2 = format_input(problem2, problem2lights, problem2connections) 
+                 outfile.write(f'{format_input(problem2, problem2lights, problem2connections)}\n')
+                 return
+        if int(problem2[0][0]) <= 1:
+             with open(output_file_path, 'w') as outfile:
+                 outfile.write(f'{"no"}\n')
+                 return
 
     except Exception as exception:
         print(exception)
     with open(output_file_path, 'w') as outfile:
-        if answer1 == True:
-            outfile.write(f'{"yes"}\n')    
-        else:
-            outfile.write(f'{"no"}\n')  
-        if answer2 == True:
-            outfile.write(f'{"yes"}\n')    
-        else:
-            outfile.write(f'{"no"}\n')   
+        outfile.write(f'{format_input(problem1, problem1Lights, problem1Connections)}\n')
+        outfile.write(f'{format_input(problem2, problem2lights, problem2connections)}\n')
     pass
 
 def format_input(problem1, problem1Lights, problem1Connections):
@@ -248,8 +240,7 @@ def format_input(problem1, problem1Lights, problem1Connections):
             temp = a+1*a
             light_map.append(Light(a+1,int(problem1Lights[0][a]), [light_connection[temp], light_connection[temp+1]]))
 
-    yes_or_no = create_clauses(light_map)
-    return yes_or_no
+    return create_clauses(light_map)
 
 def create_clauses(light_map):
     formula = two_cnf()
@@ -260,9 +251,8 @@ def create_clauses(light_map):
         else:
             formula.add_clause([str(light.switch_nums[0]), "~" +  str(light.switch_nums[1])])
             formula.add_clause(["~" + str(light.switch_nums[0]), str(light.switch_nums[1])])
-    
-    yes_or_no = two_sat_solver(formula)
-    return yes_or_no
+
+    return two_sat_solver(formula)
 
 def main():
     can_turn_off_lights("Sample_Input.txt", "Sample_Output.txt")
