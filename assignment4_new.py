@@ -67,13 +67,12 @@ class two_cnf:
     def print(self):
         print(self.con)
 
-#My class
+#Our Code
 class Light:
     def __init__(self, light_num, on_or_off, switch_nums):
         self.light_num = light_num
         self.on_or_off = on_or_off
         self.switch_nums = switch_nums
-
 
 # helper function that applies the double negation rule to a formula
 #   the function removes all occurrences ~~ from the formula
@@ -166,10 +165,9 @@ def two_sat_solver(two_cnf_formula):
     else:
         return False
 
-#my work 
 
+#Our code
 def can_turn_off_lights(input_file_path, output_file_path):
-    light_map = []
     try:
         with open(input_file_path, 'r') as infile:
             lines = [l.replace('***\n', 'problem').replace('\n', '').split(',') for l in infile.readlines()]
@@ -211,35 +209,42 @@ def can_turn_off_lights(input_file_path, output_file_path):
             while j != length:
                 problem2connections.append(lines[j])
                 j += 1
-        
-            # delete later, print statements
-            num_switches = int(problem1[0][0])
-            num_light = int(problem1[0][1])
-            light_connection = []
-            for x in range(num_light):
-                for i in range(num_switches):
-                    num_light_in_switch = len(problem1Connections[i])
-                    for j in range(num_light_in_switch):
-                        if int(problem1Connections[i][j]) == x+1:
-                            light_connection.append(i+1)
-#this is not working incorrectly assignning the switch numbers to the lights 
-            for i in range(num_light):
-                if i == 0:
-                    light_map.append(Light(i+1,problem1Lights[0][i], [light_connection[i], light_connection[i+1]]))
-                else:
-                    light_map.append(Light(i+1,problem1Lights[0][i], [light_connection[i+2], light_connection[i+3]]))
+        if int(problem1[0][0]) < 1:
+             with open(output_file_path, 'w') as outfile:
+                 outfile.write(f'{"no"}\n')
 
+        answer1 = format_input(problem1, problem1Lights, problem1Connections) 
 
-            for clause in light_map:
-                print(clause.switch_nums)  
-            yes_or_no = create_clauses(light_map)     
-        
     except Exception as exception:
         print(exception)
     with open(output_file_path, 'w') as outfile:
-        outfile.write(f'{(yes_or_no)}\n')    
+        if answer1 == True:
+            outfile.write(f'{"yes"}\n')    
+        else:
+            outfile.write(f'{"no"}\n')    
     pass
 
+def format_input(problem1, problem1Lights, problem1Connections):
+    light_map = []
+    light_connection = []
+    num_switches = int(problem1[0][0])
+    num_light = int(problem1[0][1])
+    for x in range(num_light):
+        for i in range(num_switches):
+            num_light_in_switch = len(problem1Connections[i])
+            for j in range(num_light_in_switch):
+                if int(problem1Connections[i][j]) == x+1:
+                    light_connection.append(i+1)
+                    
+    for a in range(num_light):
+        if a == 0:
+            light_map.append(Light(a+1,int(problem1Lights[0][a]), [light_connection[a], light_connection[a+1]]))
+        else:
+            temp = a+1*a
+            light_map.append(Light(a+1,int(problem1Lights[0][a]), [light_connection[temp], light_connection[temp+1]]))
+
+    yes_or_no = create_clauses(light_map)
+    return yes_or_no
 
 def create_clauses(light_map):
     formula = two_cnf()
