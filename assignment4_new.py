@@ -214,6 +214,7 @@ def can_turn_off_lights(input_file_path, output_file_path):
                  outfile.write(f'{"no"}\n')
 
         answer1 = format_input(problem1, problem1Lights, problem1Connections) 
+        answer2 = format_input(problem2, problem2lights, problem2connections) 
 
     except Exception as exception:
         print(exception)
@@ -221,7 +222,11 @@ def can_turn_off_lights(input_file_path, output_file_path):
         if answer1 == True:
             outfile.write(f'{"yes"}\n')    
         else:
-            outfile.write(f'{"no"}\n')    
+            outfile.write(f'{"no"}\n')  
+        if answer2 == True:
+            outfile.write(f'{"yes"}\n')    
+        else:
+            outfile.write(f'{"no"}\n')   
     pass
 
 def format_input(problem1, problem1Lights, problem1Connections):
