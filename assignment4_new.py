@@ -254,9 +254,4 @@ def create_clauses(light_map):
 
     return two_sat_solver(formula)
 
-def main():
-    can_turn_off_lights("Sample_Input.txt", "Sample_Output.txt")
-
-
-if __name__ == "__main__":
-    main()
+#can_turn_off_lights("Sample_Input.txt", "Sample_Output.txt")
